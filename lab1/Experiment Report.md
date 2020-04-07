@@ -183,6 +183,7 @@ return 0;
 ### 实验结果
 
 ![result](/Users/lapland/GitHub/COD2020/lab1/result.png)
+图片单独放在lab1文件夹里面emm
 
 > 结果解释：
 

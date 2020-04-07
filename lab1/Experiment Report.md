@@ -1,6 +1,6 @@
 # The experiment report for Lab 1
 
-<p align="right">PB 18000227 艾语晨</p>
+
 
 ### The original problem:
 

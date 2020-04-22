@@ -1,0 +1,3 @@
+Vivado Simulator 2019.1
+Time resolution is 1 ps
+$stop called at time : 400 ns : File "/home/ubuntu/COD/0_ALU/Lab0/Lab0.srcs/sim_1/new/testbench1.v" Line 45

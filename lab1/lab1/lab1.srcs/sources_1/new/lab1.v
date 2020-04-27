@@ -27,7 +27,7 @@ module ALU
     output reg zf,              // zero sign
     output reg cf,              // jinwei sign
 	output reg of,				// yichu
-	input [WIDTH-1:0] a,b
+	input [WIDTH-1:0] a,b,
 	input [2:0] m				// type
 );
 
@@ -56,7 +56,7 @@ module ALU
 				y = a ^ b;
 				zf = ~|y;
 			end
-			default: y = 
+			default: y = a;
 		endcase
 	end
 endmodule

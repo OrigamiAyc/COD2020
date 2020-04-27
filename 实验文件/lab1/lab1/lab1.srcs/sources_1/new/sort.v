@@ -29,15 +29,15 @@ module sort
         input clk,rst   // clock, reset
     );
 
-    parameter LOAD = 3'b000;
-    parameter CX01A = 3'b001;
-    parameter CX12A = 3'b010;
-    parameter CX23A = 3'b011;
-	parameter CX01B = 3'b100;
-	parameter CX12B = 3'b101;
-	parameter CX01C = 3'b110;
-    parameter HLT = 3'b111;
-	parameter MINUS = 3'b001;
+    localparam LOAD = 3'b000;
+    localparam CX01A = 3'b001;
+    localparam CX12A = 3'b010;
+    localparam CX23A = 3'b011;
+	localparam CX01B = 3'b100;
+	localparam CX12B = 3'b101;
+	localparam CX01C = 3'b110;
+    localparam HLT = 3'b111;
+	localparam MINUS = 3'b001;
 
 	wire zf, sf, of;
 	wire [N-1:0] A, B, OUT;
@@ -59,7 +59,7 @@ module sort
 
     always @(posedge clk) begin
         begin
-            case (next_state)
+            case (curr_state)
                 LOAD: begin
 					next_state = CX01A;
 					s0 = x0;
@@ -138,7 +138,8 @@ module sort
 	always @(posedge clk) begin
 		if (rst) begin
 			curr_state = LOAD;
-		end else begin
+		end
+		else begin
 			curr_state = next_state;
 		end
 	end

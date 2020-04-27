@@ -1,0 +1,6 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/ubuntu/COD2020/实验文件/lab1/lab1/lab1.srcs/sources_1/new/lab1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ALU
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/ubuntu/COD2020/实验文件/lab1/lab1/lab1.srcs/sources_1/new/sort.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sort
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/ubuntu/COD2020/实验文件/lab1/lab1/lab1.srcs/sim_1/new/testbench_self.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module testbench_self

@@ -65,75 +65,75 @@ module sort
                 LOAD: begin
 					done = 0;
 					next_state = CX01A;
-					s0 = x0;
-					s1 = x1;
-					s2 = x2;
-					s3 = x3;
+					s0 <= x0;
+					s1 <= x1;
+					s2 <= x2;
+					s3 <= x3;
 				end
 				CX01A: begin
 					next_state = CX12A;
-					a = s0;
-					b = s1;
-					if (of^~sf) begin
-						s0 = b;
-						s1 = a;
+					a <= s0;
+					b <= s1;
+					if ((~of & sf & ~zf) | (of & ~sf & zf)) begin
+						s0 <= b;
+						s1 <= a;
 					end
 				end
 				CX12A: begin
 					next_state = CX23A;
-					a = s1;
-					b = s2;
-					if (of^~sf) begin
-						s1 = b;
-						s2 = a;
+					a <= s1;
+					b <= s2;
+					if ((~of & sf & ~zf) | (of & ~sf & zf)) begin
+						s1 <= b;
+						s2 <= a;
 					end
 				end
 				CX23A: begin
 					next_state = CX01B;
-					a = s2;
-					b = s3;
-					if (of^~sf) begin
-						s2 = b;
-						s3 = a;
+					a <= s2;
+					b <= s3;
+					if ((~of & sf & ~zf) | (of & ~sf & zf)) begin
+						s2 <= b;
+						s3 <= a;
 					end
 				end
 				CX01B: begin
 					next_state = CX12B;
-					a = s0;
-					b = s1;
-					if (of^~sf) begin
-						s0 = b;
-						s1 = a;
+					a <= s0;
+					b <= s1;
+					if ((~of & sf & ~zf) | (of & ~sf & zf)) begin
+						s0 <= b;
+						s1 <= a;
 					end
 				end
 				CX12B: begin
 					next_state = CX01C;
-					a = s1;
-					b = s2;
-					if (of^~sf) begin
-						s1 = b;
-						s2 = a;
+					a <= s1;
+					b <= s2;
+					if ((~of & sf & ~zf) | (of & ~sf & zf)) begin
+						s1 <= b;
+						s2 <= a;
 					end
 				end
 				CX01C: begin
 					next_state = HLT;
-					a = s0;
-					b = s1;
-					if (of^~sf) begin
-						s0 = b;
-						s1 = a;
+					a <= s0;
+					b <= s1;
+					if ((~of & sf & ~zf) | (of & ~sf & zf)) begin
+						s0 <= b;
+						s1 <= a;
 					end
 				end
 				HLT: begin
-					done = 1;
+					done <= 1;
 				end
                 default: begin
-					done = 0;
+					done <= 0;
 					next_state = HLT;
-					s0 = x0;
-					s1 = x1;
-					s2 = x2;
-					s3 = x3;
+					s0 <= x0;
+					s1 <= x1;
+					s2 <= x2;
+					s3 <= x3;
 				end
             endcase
         end
@@ -141,7 +141,7 @@ module sort
 
 	always @(posedge clk) begin
 		if (rst) begin
-			next_state <= CX01A;
+			// next_state <= CX01A;
 			curr_state <= LOAD;
 		end
 		else begin

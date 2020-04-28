@@ -28,7 +28,8 @@ module ALU
     output reg cf,              // jinwei sign
 	output reg of,				// yichu
 	output reg sf,				// for signed cal
-	input [WIDTH-1:0] a,b,
+	input [WIDTH-1:0] a,
+	input [WIDTH-1:0] b,
 	input [2:0] m				// type
 );
 

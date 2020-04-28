@@ -46,7 +46,7 @@ module testbench_self;
     initial begin
         clk = 0;
         repeat (2 * CYCLE)
-            #1 clk = ~clk;
+            #5 clk = ~clk;
         $finish;
     end
 

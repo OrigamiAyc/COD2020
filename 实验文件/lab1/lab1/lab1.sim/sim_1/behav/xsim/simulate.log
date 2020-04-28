@@ -1,0 +1,3 @@
+Vivado Simulator 2019.1
+Time resolution is 1 ps
+$finish called at time : 40 ns : File "/home/ubuntu/COD2020/实验文件/lab1/lab1/lab1.srcs/sim_1/new/testbench_self.v" Line 50

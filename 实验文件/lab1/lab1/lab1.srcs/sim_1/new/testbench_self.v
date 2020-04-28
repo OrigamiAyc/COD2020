@@ -52,7 +52,7 @@ module testbench_self;
 
     initial begin
         rst = 0;
-        #1 rst = 1;
+        #3 rst = 1;
         #1 rst = 0;
     end
 

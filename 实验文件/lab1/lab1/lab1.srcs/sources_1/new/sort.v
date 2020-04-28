@@ -39,7 +39,7 @@ module sort
     localparam HLT = 3'b111;
 	localparam MINUS = 3'b001;
 
-	wire zf, sf, of;
+	wire zf, cf, sf, of;
 	wire [N-1:0] A, B, OUT;
 
     reg [N-1:0] a, b;
@@ -53,14 +53,17 @@ module sort
 		.b(B),
 		.y(OUT),
 		.zf(zf),
-		.cf(sf),
+		.cf(cf),
 		.of(of),
-		.m(MINUS));
+		.sf(sf),
+		.m(MINUS)
+	);
 
     always @(posedge clk) begin
         begin
             case (curr_state)
                 LOAD: begin
+					done = 0;
 					next_state = CX01A;
 					s0 = x0;
 					s1 = x1;
@@ -71,7 +74,7 @@ module sort
 					next_state = CX12A;
 					a = s0;
 					b = s1;
-					if (of~^sf) begin
+					if (of^~sf) begin
 						s0 = b;
 						s1 = a;
 					end
@@ -80,7 +83,7 @@ module sort
 					next_state = CX23A;
 					a = s1;
 					b = s2;
-					if (of~^sf) begin
+					if (of^~sf) begin
 						s1 = b;
 						s2 = a;
 					end
@@ -89,7 +92,7 @@ module sort
 					next_state = CX01B;
 					a = s2;
 					b = s3;
-					if (of~^sf) begin
+					if (of^~sf) begin
 						s2 = b;
 						s3 = a;
 					end
@@ -98,7 +101,7 @@ module sort
 					next_state = CX12B;
 					a = s0;
 					b = s1;
-					if (of~^sf) begin
+					if (of^~sf) begin
 						s0 = b;
 						s1 = a;
 					end
@@ -107,7 +110,7 @@ module sort
 					next_state = CX01C;
 					a = s1;
 					b = s2;
-					if (of~^sf) begin
+					if (of^~sf) begin
 						s1 = b;
 						s2 = a;
 					end
@@ -116,7 +119,7 @@ module sort
 					next_state = HLT;
 					a = s0;
 					b = s1;
-					if (of~^sf) begin
+					if (of^~sf) begin
 						s0 = b;
 						s1 = a;
 					end
@@ -125,7 +128,8 @@ module sort
 					done = 1;
 				end
                 default: begin
-					next_state = CX01A;
+					done = 0;
+					next_state = HLT;
 					s0 = x0;
 					s1 = x1;
 					s2 = x2;
@@ -137,10 +141,11 @@ module sort
 
 	always @(posedge clk) begin
 		if (rst) begin
-			curr_state = LOAD;
+			next_state <= CX01A;
+			curr_state <= LOAD;
 		end
 		else begin
-			curr_state = next_state;
+			curr_state <= next_state;
 		end
 	end
 

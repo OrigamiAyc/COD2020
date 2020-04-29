@@ -8,21 +8,37 @@
 
 #### Contents
 
-- [实验原题](实验原题)
-	- [实验目标](实验目标)
-	- [实验内容](实验内容)
-	- [实验步骤](实验步骤)
-	- [实验检查](实验检查)
-	- [思考题](思考题)
-- [实验完成](实验完成)
-	- [逻辑设计](逻辑设计)
-		- [ALU模块](ALU 模块)
-		- [总的排序电路](总的排序电路)
-	- [核心代码](核心代码)
+- [实验原题](#实验原题)
+	- [实验目标](#实验目标)
+	- [实验内容](#实验内容)
+	- [实验步骤](#实验步骤)
+	- [实验检查](#实验检查)
+	- [思考题](#思考题)
+- [实验完成](#实验完成)
+	- [逻辑设计](#逻辑设计)
+		- [ALU模块](#ALU 模块)
+		- [总的排序电路](#总的排序电路)
+	- [核心代码](#核心代码)
+		- [MUX](#MUX)
+		- [REG](#REG)
+		- [ALU](#ALU)
+		- [SORT](#SORT)
+		- [SIMULATION_ALU](#SIMULATION_ALU)
+		- [SIMULATION_SORT](#SIMULATION_SORT)
+	- [仿真结果](#仿真结果)
+		- [ALU_RESULT](#ALU_RESULT)
+		- [SORT_RESULT](#SORT_RESULT)
+	- [结果分析](#结果分析)
+	- [实验总结](#实验总结)
+	- [意见 / 建议](#意见 / 建议)
+- [思考题解答](#思考题解答)
+- [Summary](#Summary)
 
 <!-- tocstop -->
 
 ### 实验原题
+
+> 注：由于我也不知道的原因，图片渲染不出来ORZ。。
 
 ##### 实验目标
 
@@ -349,7 +365,52 @@ module sort
 endmodule
 ```
 
-###### SIMULATION
+###### SIMULATION_ALU
+
+```verilog
+module testbench();
+    reg [3:0] a, b;
+    reg [2:0] m;
+    wire [3:0] y;
+    wire zf, cf, of, sf;
+    
+    parameter PERIOD = 10;
+     
+    ALU #(4) ALU(.a(a), .b(b), .m(m), .y(y), .cf(cf), .of(of), .zf(zf), .sf(sf));
+    
+    initial begin
+        m = 0;      		//ADD
+        a = 4'b0001;
+        b = 4'b0010;
+        
+        #PERIOD m = 1;	//SUB
+
+        a = 4'b0010;
+        b = 4'b0001;
+
+        #PERIOD m = 2;	//AND
+        a = 4'b0001;
+        b = 4'b0101;
+        
+        #PERIOD m = 3;	//OR
+        a = 4'b0001;
+        b = 4'b0101;
+        
+        #PERIOD m = 4;	//XOR
+        a = 4'b0001;
+        b = 4'b0101;
+        
+        #PERIOD m = 5;	//other
+        a = 4'b0001;
+        b = 4'b0101;
+        
+        #PERIOD;
+        $finish;      
+    end
+endmodule
+```
+
+###### SIMULATION_SORT
 
 ```verilog
 module testbench_self;
@@ -399,25 +460,30 @@ endmodule
 
 ##### 仿真结果
 
+###### ALU_RESULT
+
+![Screenshot 2020-04-29 at 8.56.26 PM](/Users/lapland/Library/Application Support/typora-user-images/Screenshot 2020-04-29 at 8.56.26 PM.png)
+
+###### SORT_RESULT
+
 ![Screenshot 2020-04-29 at 4.29.56 PM](/Users/lapland/Library/Application Support/typora-user-images/Screenshot 2020-04-29 at 4.29.56 PM.png)
 
 ##### 结果分析
 
-排序结果是1，2，3，6；可见排序正确
+- 排序结果是1，2，3，6；可见排序正确
 
 ##### 实验总结
 
-本实验用到了很多上学期模电的知识，但是用 MUX 来控制数据交换而不是在ALU输出端用组合逻辑电路，是后面设计 CPU 的一个重要的点。
-
-在实验中踩过的坑依然是写成单独的summary，一并附在后面。
+1. 本实验用到了很多上学期模电的知识，但是用 MUX 来控制数据交换而不是在ALU输出端用组合逻辑电路，是后面设计 CPU 的一个重要的点。
+2. 在实验中踩过的坑依然是写成单独的summary，一并附在后面。
 
 ##### 意见 / 建议
 
-对本次实验：无
+- 对本次实验：无
 
-建议实验早 2～3 星期开始
+- 建议实验早 2～3 星期开始
 
-### 思考题
+### 思考题解答
 
 1. 如果要求排序后的数据是递减顺序，电路如何调整？
 
@@ -460,3 +526,4 @@ end
 3. 用 MUX 来实现交换
 4. 我觉得吧，MUX0～4也可以用ALU的输出来控制，因为最终决定是否改变寄存器的值是使能信号，所以按照我那个电路图来看，使能为1恰好MUX也选择了交换通道
 
+P.S. 所有的代码、逻辑图、文字材料都放到了我的[GitHub repo](https://github.com/Lapland-Stark/COD2020/tree/master/实验文件/lab1)里面

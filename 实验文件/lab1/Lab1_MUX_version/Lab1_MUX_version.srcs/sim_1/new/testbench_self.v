@@ -60,6 +60,6 @@ module testbench_self;
         x0 = 3;
         x1 = 1;
         x2 = 6;
-        x3 = 2;
+        x3 = -2;
     end
 endmodule

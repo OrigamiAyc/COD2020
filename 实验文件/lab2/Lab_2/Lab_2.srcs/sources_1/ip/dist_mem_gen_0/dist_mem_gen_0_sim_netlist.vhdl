@@ -1,10 +1,10 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.1 (lin64) Build 2552052 Fri May 24 14:47:09 MDT 2019
--- Date        : Tue May  5 15:53:41 2020
+-- Date        : Tue May  5 15:53:40 2020
 -- Host        : VM1150-Lapland running 64-bit Ubuntu 18.04.4 LTS
--- Command     : write_vhdl -force -mode funcsim
---               /home/ubuntu/COD2020/lab2/Lab_2/Lab_2.srcs/sources_1/ip/dist_mem_gen_0/dist_mem_gen_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top dist_mem_gen_0 -prefix
+--               dist_mem_gen_0_ dist_mem_gen_0_sim_netlist.vhdl
 -- Design      : dist_mem_gen_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -22,8 +22,6 @@ entity dist_mem_gen_0_spram is
     we : in STD_LOGIC;
     a : in STD_LOGIC_VECTOR ( 3 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of dist_mem_gen_0_spram : entity is "spram";
 end dist_mem_gen_0_spram;
 
 architecture STRUCTURE of dist_mem_gen_0_spram is
@@ -281,8 +279,6 @@ entity dist_mem_gen_0_dist_mem_gen_v8_0_13_synth is
     we : in STD_LOGIC;
     a : in STD_LOGIC_VECTOR ( 3 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of dist_mem_gen_0_dist_mem_gen_v8_0_13_synth : entity is "dist_mem_gen_v8_0_13_synth";
 end dist_mem_gen_0_dist_mem_gen_v8_0_13_synth;
 
 architecture STRUCTURE of dist_mem_gen_0_dist_mem_gen_v8_0_13_synth is
@@ -384,8 +380,6 @@ entity dist_mem_gen_0_dist_mem_gen_v8_0_13 is
   attribute C_SYNC_ENABLE of dist_mem_gen_0_dist_mem_gen_v8_0_13 : entity is 1;
   attribute C_WIDTH : integer;
   attribute C_WIDTH of dist_mem_gen_0_dist_mem_gen_v8_0_13 : entity is 8;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of dist_mem_gen_0_dist_mem_gen_v8_0_13 : entity is "dist_mem_gen_v8_0_13";
 end dist_mem_gen_0_dist_mem_gen_v8_0_13;
 
 architecture STRUCTURE of dist_mem_gen_0_dist_mem_gen_v8_0_13 is

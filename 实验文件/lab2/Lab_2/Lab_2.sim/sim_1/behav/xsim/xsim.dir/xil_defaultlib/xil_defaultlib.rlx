@@ -1,0 +1,9 @@
+0.6
+2019.1
+May 24 2019
+14:51:52
+/home/ubuntu/COD2020/实验文件/lab2/Lab_2/Lab_2.sim/sim_1/behav/xsim/glbl.v,1558713910,verilog,,,,glbl,,,,,,,,
+/home/ubuntu/COD2020/实验文件/lab2/Lab_2/Lab_2.srcs/sim_1/new/tb_queue.v,1588769447,verilog,,,,tb_fifo,,,,,,,,
+/home/ubuntu/COD2020/实验文件/lab2/Lab_2/Lab_2.srcs/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v,1588694138,verilog,,/home/ubuntu/COD2020/实验文件/lab2/Lab_2/Lab_2.srcs/sources_1/new/fifo.v,,blk_mem_gen_0,,,,,,,,
+/home/ubuntu/COD2020/实验文件/lab2/Lab_2/Lab_2.srcs/sources_1/ip/dist_mem_gen_0/sim/dist_mem_gen_0.v,1588763261,verilog,,/home/ubuntu/COD2020/实验文件/lab2/Lab_2/Lab_2.srcs/sources_1/new/fifo.v,,dist_mem_gen_0,,,,,,,,
+/home/ubuntu/COD2020/实验文件/lab2/Lab_2/Lab_2.srcs/sources_1/new/fifo.v,1588768921,verilog,,/home/ubuntu/COD2020/实验文件/lab2/Lab_2/Lab_2.srcs/sim_1/new/tb_queue.v,,fifo,,,,,,,,

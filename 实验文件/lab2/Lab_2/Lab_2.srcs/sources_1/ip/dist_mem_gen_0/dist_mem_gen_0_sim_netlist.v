@@ -1,10 +1,10 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2019.1 (lin64) Build 2552052 Fri May 24 14:47:09 MDT 2019
-// Date        : Tue May  5 15:53:41 2020
+// Date        : Tue May  5 15:53:40 2020
 // Host        : VM1150-Lapland running 64-bit Ubuntu 18.04.4 LTS
-// Command     : write_verilog -force -mode funcsim
-//               /home/ubuntu/COD2020/lab2/Lab_2/Lab_2.srcs/sources_1/ip/dist_mem_gen_0/dist_mem_gen_0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top dist_mem_gen_0 -prefix
+//               dist_mem_gen_0_ dist_mem_gen_0_sim_netlist.v
 // Design      : dist_mem_gen_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -97,7 +97,7 @@ endmodule
 (* C_MEM_INIT_FILE = "no_coe_file_loaded" *) (* C_MEM_TYPE = "1" *) (* C_PARSER_TYPE = "1" *) 
 (* C_PIPELINE_STAGES = "0" *) (* C_QCE_JOINED = "0" *) (* C_QUALIFY_WE = "0" *) 
 (* C_READ_MIF = "0" *) (* C_REG_A_D_INPUTS = "0" *) (* C_REG_DPRA_INPUT = "0" *) 
-(* C_SYNC_ENABLE = "1" *) (* C_WIDTH = "8" *) (* ORIG_REF_NAME = "dist_mem_gen_v8_0_13" *) 
+(* C_SYNC_ENABLE = "1" *) (* C_WIDTH = "8" *) 
 module dist_mem_gen_0_dist_mem_gen_v8_0_13
    (a,
     d,
@@ -175,7 +175,6 @@ module dist_mem_gen_0_dist_mem_gen_v8_0_13
         .we(we));
 endmodule
 
-(* ORIG_REF_NAME = "dist_mem_gen_v8_0_13_synth" *) 
 module dist_mem_gen_0_dist_mem_gen_v8_0_13_synth
    (spo,
     clk,
@@ -202,7 +201,6 @@ module dist_mem_gen_0_dist_mem_gen_v8_0_13_synth
         .we(we));
 endmodule
 
-(* ORIG_REF_NAME = "spram" *) 
 module dist_mem_gen_0_spram
    (spo,
     clk,

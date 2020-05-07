@@ -1,0 +1,6 @@
+Vivado Simulator 2019.1
+Time resolution is 1 ps
+ Block Memory Generator module loading initial data...
+ Block Memory Generator data initialization complete.
+Block Memory Generator module tb_fifo.queue.ram_read.inst.native_mem_module.blk_mem_gen_v8_4_3_inst is using a behavioral model for simulation which will not precisely model memory collision behavior.
+$finish called at time : 120 ns : File "/home/ubuntu/COD2020/实验文件/lab2/Lab_2/Lab_2.srcs/sim_1/new/tb_queue.v" Line 64

@@ -1,0 +1,41 @@
+
+ep_mm.c中是显示空闲链表的实现
+mm.c   中是隐式空闲链表的实现
+
+未实现：
+分离的空闲链表（分离适配 or 伙伴系统）
+
+
+***********
+Main Files:
+***********
+
+mm.{c,h}	
+	Your solution malloc package. mm.c is the file that you
+	will be handing in, and is the only file you should modify.
+
+mdriver.c	
+	The malloc driver that tests your mm.c file
+
+./trace/1,2.rep
+	Two tiny tracefiles to help you get started. 
+
+Makefile	
+	Builds the driver
+
+**********************************
+Other support files for the driver
+**********************************
+
+memlib.{c,h}	Models the heap and sbrk function
+
+*******************************
+Building and running the driver
+*******************************
+To build the driver, type "make" to the shell.
+
+To run the driver on a tiny test trace:
+
+	unix> ./mdriver
+
+

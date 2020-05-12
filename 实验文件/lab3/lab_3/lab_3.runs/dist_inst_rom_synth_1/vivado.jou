@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:47:09 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Tue May 12 11:51:38 2020
+# Process ID: 1768214
+# Current directory: /home/ubuntu/COD2020/lab3/lab_3/lab_3.runs/dist_inst_rom_synth_1
+# Command line: vivado -log dist_inst_rom.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source dist_inst_rom.tcl
+# Log file: /home/ubuntu/COD2020/lab3/lab_3/lab_3.runs/dist_inst_rom_synth_1/dist_inst_rom.vds
+# Journal file: /home/ubuntu/COD2020/lab3/lab_3/lab_3.runs/dist_inst_rom_synth_1/vivado.jou
+#-----------------------------------------------------------
+source dist_inst_rom.tcl -notrace

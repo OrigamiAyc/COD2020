@@ -1,0 +1,23 @@
+Vivado Simulator 2019.1
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: /opt/Xilinx/Vivado/2019.1/bin/unwrapped/lnx64.o/xelab -wto f440348aa07b4a4abfa60935cbd5de60 --incr --debug typical --relax --mt 8 -L dist_mem_gen_v8_0_13 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_CPU_behav xil_defaultlib.tb_CPU xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 4 for port 'in_1' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:67]
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 4 for port 'in_2' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:68]
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 4 for port 'out' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:69]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 8 for port 'a' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:214]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'in_1' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:75]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'in_2' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:76]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'out' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:77]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'in_1' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:82]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'in_2' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:83]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'out' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:84]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'in_1' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:89]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'in_2' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:90]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'out' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:91]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'in_1' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:96]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'in_2' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:97]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 4 for port 'out' [/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/new/single_cycle_CPU.v:98]
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel

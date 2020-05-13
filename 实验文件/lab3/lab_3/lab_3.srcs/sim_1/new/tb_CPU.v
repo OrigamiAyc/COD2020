@@ -23,7 +23,7 @@
 module tb_CPU;
     reg clk, rst;
 
-    single_cycle_CPU cpu (
+    sin_CPU cpu (
         .clk(clk),
         .rst(rst)
     );

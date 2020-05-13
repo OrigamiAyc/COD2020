@@ -62,7 +62,7 @@ module sin_CPU
 	);
 
 	// for the MUX at the entrance of reg_pile
-	mux mux_reg (
+	mux #(5) mux_reg (
 		.m(RegDst),
 		.in_1(ins_reg_2),
 		.in_2(ins_reg_3),
@@ -70,28 +70,28 @@ module sin_CPU
 	);
 
 	// for the MUX at the entrance of ALU
-	mux mux_alu (
+	mux #(32) mux_alu (
 		.m(ALUSrc),
 		.in_1(read_data_2),
 		.in_2(extend_addr),
 		.out(ALU_b)
 	);
 
-	mux mux_beq (
+	mux #(32) mux_beq (
 		.m(PCSrc),
 		.in_1(npc),
 		.in_2(beq_result),
 		.out(not_jump)
 	);
 
-	mux mux_jump (
+	mux #(32) mux_jump (
 		.m(Jump),
 		.in_1(not_jump),
 		.in_2(jump_addr),
 		.out(fin_npc)
 	);
 
-	mux mux_wb (
+	mux #(32) mux_wb (
 		.m(MemtoReg),
 		.in_1(Mem_Out),
 		.in_2(ALU_result),

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="dist_data_ram_synth_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1589360026">
-  <File Type="VDS-TIMINGSUMMARY" Name="dist_data_ram_timing_summary_synth.rpt"/>
+  <File Type="PA-TCL" Name="dist_data_ram.tcl"/>
+  <File Type="REPORTS-TCL" Name="dist_data_ram_reports.tcl"/>
+  <File Type="RDS-RDS" Name="dist_data_ram.vds"/>
+  <File Type="RDS-UTIL" Name="dist_data_ram_utilization_synth.rpt"/>
   <File Type="RDS-DCP" Name="dist_data_ram.dcp"/>
   <File Type="RDS-UTIL-PB" Name="dist_data_ram_utilization_synth.pb"/>
-  <File Type="RDS-UTIL" Name="dist_data_ram_utilization_synth.rpt"/>
-  <File Type="RDS-PROPCONSTRS" Name="dist_data_ram_drc_synth.rpt"/>
-  <File Type="RDS-RDS" Name="dist_data_ram.vds"/>
-  <File Type="REPORTS-TCL" Name="dist_data_ram_reports.tcl"/>
-  <File Type="VDS-TIMING-PB" Name="dist_data_ram_timing_summary_synth.pb"/>
-  <File Type="PA-TCL" Name="dist_data_ram.tcl"/>
   <FileSet Name="sources" Type="BlockSrcs" RelSrcDir="$PSRCDIR/dist_data_ram">
     <File Path="$PSRCDIR/sources_1/ip/dist_data_ram/dist_data_ram.xci">
       <FileInfo>

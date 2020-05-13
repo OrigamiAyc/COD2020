@@ -20,11 +20,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module mux(
+module mux
+#parameter WIDTH = 32;
+(
 	input m, // control signal
-	input [3:0] in_1,in_2,
-	output [3:0] out
+	input [WIDTH-1:0] in_1,in_2,
+	output [WIDTH-1:0] out
 );
-	assign out=(m==0?in_1:in_2);
+	assign out=(m == 1'b0 ? in_1 : in_2);
 
 endmodule // mux

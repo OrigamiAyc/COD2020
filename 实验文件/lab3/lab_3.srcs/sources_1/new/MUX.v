@@ -21,7 +21,7 @@
 
 
 module mux
-#parameter WIDTH = 32;
+#(parameter WIDTH = 32)
 (
 	input m, // control signal
 	input [WIDTH-1:0] in_1,in_2,

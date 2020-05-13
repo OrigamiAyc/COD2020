@@ -20,7 +20,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/ubuntu/COD2020/lab3/lab_3/lab_3.runs/dist_inst_rom_synth_1'
+HD_PWD='/home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.runs/dist_inst_rom_synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

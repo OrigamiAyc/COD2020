@@ -1,10 +1,10 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.1 (lin64) Build 2552052 Fri May 24 14:47:09 MDT 2019
--- Date        : Tue May 12 11:54:00 2020
+-- Date        : Wed May 13 09:05:06 2020
 -- Host        : VM1150-Lapland running 64-bit Ubuntu 18.04.4 LTS
 -- Command     : write_vhdl -force -mode funcsim
---               /home/ubuntu/COD2020/lab3/lab_3/lab_3.srcs/sources_1/ip/dist_data_ram/dist_data_ram_sim_netlist.vhdl
+--               /home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/ip/dist_data_ram/dist_data_ram_sim_netlist.vhdl
 -- Design      : dist_data_ram
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -453,7 +453,7 @@ begin
     );
 ram_reg_0_255_0_0: unisim.vcomponents.RAM256X1S
     generic map(
-      INIT => X"0000000000000000000000000000000000000000000000000000000000000000"
+      INIT => X"0000000000000000000000000000000000000000000000000000000000000080"
     )
         port map (
       A(7 downto 0) => a(7 downto 0),
@@ -574,7 +574,7 @@ ram_reg_0_255_19_19: unisim.vcomponents.RAM256X1S
     );
 ram_reg_0_255_1_1: unisim.vcomponents.RAM256X1S
     generic map(
-      INIT => X"0000000000000000000000000000000000000000000000000000000000000000"
+      INIT => X"0000000000000000000000000000000000000000000000000000000000000002"
     )
         port map (
       A(7 downto 0) => a(7 downto 0),
@@ -695,7 +695,7 @@ ram_reg_0_255_29_29: unisim.vcomponents.RAM256X1S
     );
 ram_reg_0_255_2_2: unisim.vcomponents.RAM256X1S
     generic map(
-      INIT => X"0000000000000000000000000000000000000000000000000000000000000000"
+      INIT => X"0000000000000000000000000000000000000000000000000000000000000082"
     )
         port map (
       A(7 downto 0) => a(7 downto 0),
@@ -717,7 +717,7 @@ ram_reg_0_255_30_30: unisim.vcomponents.RAM256X1S
     );
 ram_reg_0_255_31_31: unisim.vcomponents.RAM256X1S
     generic map(
-      INIT => X"0000000000000000000000000000000000000000000000000000000000000000"
+      INIT => X"0000000000000000000000000000000000000000000000000000000000000030"
     )
         port map (
       A(7 downto 0) => a(7 downto 0),
@@ -728,7 +728,7 @@ ram_reg_0_255_31_31: unisim.vcomponents.RAM256X1S
     );
 ram_reg_0_255_3_3: unisim.vcomponents.RAM256X1S
     generic map(
-      INIT => X"0000000000000000000000000000000000000000000000000000000000000000"
+      INIT => X"0000000000000000000000000000000000000000000000000000000000000008"
     )
         port map (
       A(7 downto 0) => a(7 downto 0),
@@ -783,7 +783,7 @@ ram_reg_0_255_7_7: unisim.vcomponents.RAM256X1S
     );
 ram_reg_0_255_8_8: unisim.vcomponents.RAM256X1S
     generic map(
-      INIT => X"0000000000000000000000000000000000000000000000000000000000000000"
+      INIT => X"0000000000000000000000000000000000000000000000000000000000000060"
     )
         port map (
       A(7 downto 0) => a(7 downto 0),
@@ -898,7 +898,7 @@ entity dist_data_ram_dist_mem_gen_v8_0_13 is
   attribute C_HAS_WE : integer;
   attribute C_HAS_WE of dist_data_ram_dist_mem_gen_v8_0_13 : entity is 1;
   attribute C_MEM_INIT_FILE : string;
-  attribute C_MEM_INIT_FILE of dist_data_ram_dist_mem_gen_v8_0_13 : entity is "no_coe_file_loaded";
+  attribute C_MEM_INIT_FILE of dist_data_ram_dist_mem_gen_v8_0_13 : entity is "dist_data_ram.mif";
   attribute C_MEM_TYPE : integer;
   attribute C_MEM_TYPE of dist_data_ram_dist_mem_gen_v8_0_13 : entity is 1;
   attribute C_PARSER_TYPE : integer;
@@ -910,7 +910,7 @@ entity dist_data_ram_dist_mem_gen_v8_0_13 is
   attribute C_QUALIFY_WE : integer;
   attribute C_QUALIFY_WE of dist_data_ram_dist_mem_gen_v8_0_13 : entity is 0;
   attribute C_READ_MIF : integer;
-  attribute C_READ_MIF of dist_data_ram_dist_mem_gen_v8_0_13 : entity is 0;
+  attribute C_READ_MIF of dist_data_ram_dist_mem_gen_v8_0_13 : entity is 1;
   attribute C_REG_A_D_INPUTS : integer;
   attribute C_REG_A_D_INPUTS of dist_data_ram_dist_mem_gen_v8_0_13 : entity is 0;
   attribute C_REG_DPRA_INPUT : integer;
@@ -1110,7 +1110,7 @@ architecture STRUCTURE of dist_data_ram is
   attribute c_has_spo : integer;
   attribute c_has_spo of U0 : label is 1;
   attribute c_mem_init_file : string;
-  attribute c_mem_init_file of U0 : label is "no_coe_file_loaded";
+  attribute c_mem_init_file of U0 : label is "dist_data_ram.mif";
   attribute c_parser_type : integer;
   attribute c_parser_type of U0 : label is 1;
   attribute c_pipeline_stages : integer;
@@ -1118,7 +1118,7 @@ architecture STRUCTURE of dist_data_ram is
   attribute c_qualify_we : integer;
   attribute c_qualify_we of U0 : label is 0;
   attribute c_read_mif : integer;
-  attribute c_read_mif of U0 : label is 0;
+  attribute c_read_mif of U0 : label is 1;
   attribute c_reg_a_d_inputs : integer;
   attribute c_reg_a_d_inputs of U0 : label is 0;
   attribute c_sync_enable : integer;

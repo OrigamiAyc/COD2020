@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:47:09 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Wed May 13 08:53:51 2020
+# Process ID: 2340522
+# Current directory: /home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.runs/dist_data_ram_synth_1
+# Command line: vivado -log dist_data_ram.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source dist_data_ram.tcl
+# Log file: /home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.runs/dist_data_ram_synth_1/dist_data_ram.vds
+# Journal file: /home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.runs/dist_data_ram_synth_1/vivado.jou
+#-----------------------------------------------------------
+source dist_data_ram.tcl -notrace

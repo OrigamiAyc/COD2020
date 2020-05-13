@@ -70,7 +70,7 @@ module ALU
 				sf = y[WIDTH-1];
 			end
             SLT: begin
-                y = (a < b) ? WIDTH'b1 : WIDTH'b0;
+                y = (a < b) ? 32'b1 : 32'b0;
             end
 			default: y = a;
 		endcase

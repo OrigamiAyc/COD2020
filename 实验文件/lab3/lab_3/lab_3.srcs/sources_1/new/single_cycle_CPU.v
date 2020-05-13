@@ -126,7 +126,6 @@ module sin_CPU
 	assign jump_addr = {NPC[31:28], ins[25:0], 2'b00};
 
 	// control unit
-	assign RegDst = 
 	always @(*) begin
 		{regdst, jump, branch, memread, memtoreg, alusrc, regwrite, memwrite, aluop} = 10'b0;
 		case (ins[31:26])

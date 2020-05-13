@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
+// on basis of the COD 5th edition, we use the following parameters
 module ALU
     #(parameter WIDTH = 32) 	// data width
 (
@@ -33,35 +33,45 @@ module ALU
 	input [2:0] m				// type
 );
 
-	always @(*) begin
+	localparam ADD = 3'b010;
+    localparam SUBTRACT = 3'b110;
+    localparam AND = 3'b000;
+    localparam OR = 3'b001;
+    localparam XOR = 3'b100;
+    localparam SLT = 3'b111;
+
+    always @(*) begin
 		{zf,of,cf,sf} = 4'b0000;
 		case (m)
-			3'b000:  begin
+			ADD:  begin
 				{cf, y} = a + b;
 				of = (~a[WIDTH-1] & ~b[WIDTH-1] & y[WIDTH-1]) | (a[WIDTH-1] & b[WIDTH-1] & ~y[WIDTH-1]);
 				zf = ~|y;
 			end
-			3'b001: begin
+			SUBTRACT: begin
 				{cf, y} = a - b;
 				of = (~a[WIDTH-1] & b[WIDTH-1] & y[WIDTH-1]) | (a[WIDTH-1] & ~b[WIDTH-1] & ~y[WIDTH-1]);
 				zf = ~|y;
 				sf = y[WIDTH-1];
 			end
-			3'b010: begin
+			AND: begin
 				y = a & b;
 				zf = ~|y;
 				sf = y[WIDTH-1];
 			end
-			3'b011: begin
+			OR: begin
 				y = a | b;
 				zf = ~|y;
 				sf = y[WIDTH-1];
 			end
-			3'b100: begin
+			XOR: begin
 				y = a ^ b;
 				zf = ~|y;
 				sf = y[WIDTH-1];
 			end
+            SLT: begin
+                y = (a < b) ? 32'b1 : 32'b0;
+            end
 			default: y = a;
 		endcase
 	end

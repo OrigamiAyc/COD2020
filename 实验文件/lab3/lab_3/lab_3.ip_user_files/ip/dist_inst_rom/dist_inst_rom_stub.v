@@ -1,10 +1,10 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2019.1 (lin64) Build 2552052 Fri May 24 14:47:09 MDT 2019
-// Date        : Tue May 12 11:52:23 2020
+// Date        : Wed May 13 09:05:50 2020
 // Host        : VM1150-Lapland running 64-bit Ubuntu 18.04.4 LTS
 // Command     : write_verilog -force -mode synth_stub
-//               /home/ubuntu/COD2020/lab3/lab_3/lab_3.srcs/sources_1/ip/dist_inst_rom/dist_inst_rom_stub.v
+//               /home/ubuntu/COD2020/实验文件/lab3/lab_3/lab_3.srcs/sources_1/ip/dist_inst_rom/dist_inst_rom_stub.v
 // Design      : dist_inst_rom
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tcsg324-1

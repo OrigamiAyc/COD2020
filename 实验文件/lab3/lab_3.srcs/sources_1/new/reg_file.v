@@ -38,6 +38,13 @@ module reg_file
 	assign rd0 = reg_file[ra0];
 	assign rd1 = reg_file[ra1];
 
+	integer i;						// loop varible
+	initial begin
+		for (i = 0; i < 32; i = i + 1) begin
+			reg_file [i] = 0;
+		end
+	end
+
 	always @(posedge clk) begin
 		if (we) begin
 			reg_file[wa] = wd;

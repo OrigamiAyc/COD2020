@@ -33,6 +33,7 @@ module tb_CPU;
         clk = 1;
         rst = 1;
         # 10 rst = 0;
+        # 90 $finish;
     end
 
     always

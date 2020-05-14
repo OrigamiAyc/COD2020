@@ -29,7 +29,7 @@ module sin_CPU
 	);
 
 	reg [WIDTH-1:0] PC;					// program counter
-	reg [WIDTH-1:0] NPC;				// new PC
+	// reg [WIDTH-1:0] NPC;				// new PC
 	reg [2:0] alu_ctrl;					// ALU_ctrl
 	reg regdst, jump, branch, memread, memtoreg, memwrite, alusrc, regwrite;
 	reg [1:0] aluop;
@@ -54,6 +54,16 @@ module sin_CPU
 	wire [WIDTH-1:0] Mem_Out;
 
 	assign pc_addr = PC[9:2];
+	// assign npc = NPC;
+	assign RegDst = regdst;
+	assign RegWrite = regwrite;
+	assign ALUSrc = alusrc;
+	assign MemRead = memread;
+	assign MemWrite = memwrite;
+	assign MemtoReg = memtoreg;
+	assign Branch = branch;
+	assign Jump = jump;
+	assign ALUOp = aluop;
 
 	// inst of a program
 	dist_inst_rom instruction(
@@ -98,9 +108,10 @@ module sin_CPU
 		.out(write_data)
 	);
 
-	always @(posedge clk) begin			// pre-load
-		NPC = PC + 1;
-	end
+	assign npc = PC + 32'd4;
+	// always @(posedge clk) begin			// pre-load
+	// 	NPC = PC + 32'd4;
+	// end
 
 	// inst of a reg_pile, IF
 	reg_file register_file (
@@ -123,7 +134,7 @@ module sin_CPU
 	// sign extend
 	assign extend_addr = {((imme_addr[15]) ? 16'hffff : 16'h0000), imme_addr};
 	// jump addr
-	assign jump_addr = {NPC[31:28], ins[25:0], 2'b00};
+	assign jump_addr = {npc[31:28], ins[25:0], 2'b00};
 
 	// control unit
 	always @(*) begin
@@ -207,7 +218,7 @@ module sin_CPU
 	);
 
 	assign PCSrc = ALU_Zero & Branch;
-	assign beq_result = NPC + {extend_addr[29:0], 2'b00};
+	assign beq_result = npc + {extend_addr[29:0], 2'b00};
 	
 	// MEM
 	dist_data_ram memory (
@@ -217,4 +228,14 @@ module sin_CPU
 		.we(MemWrite),
 		.spo(Mem_Out)
 	);
+
+	// change PC
+	always @(posedge clk or posedge rst) begin
+		if (rst) begin
+			PC = 32'b0;
+		end
+		else begin
+			PC = fin_npc;
+		end
+	end
 endmodule

@@ -4,8 +4,6 @@
 
 ## Single Cycle CPU
 
-### About PC
-
 PC (program counter)
 
 - Why PC + 4 in memory?
@@ -86,3 +84,13 @@ PC (program counter)
 	- 包括`PC`也有这个情况，是因为32位是4个字节啊。。。
 	- 那么，这两位的用处是：
 		- 对于`lb`指令，取出来的还是4个字节，然后$A_0A_1$两位就用于选择是哪一个字节
+- 对于定义`wire`类型：
+	- 定义的都需要赋值操作。。。虽然这很基础但是很多时候还是会忘掉
+	- NPC是wire类型
+
+## DBU
+
+Debug unit
+
+$LHS=\int_{-\infty}^{+\infty}\delta(t)\varphi(-t)\,d(-t)\\=-\int_{+\infty}^{-\infty}\delta(t)\varphi(-t)\,dt\\=RHS$
+

@@ -39,6 +39,12 @@ module SegDis
 		.scan_cnt(scan_cnt)
 	);
 
+	initial
+	begin
+		an = 8'b0;
+		show_data = 32'b0;
+	end
+
 	always @(posedge clk) begin
 		case (scan_cnt)
 			3'h0: an <= 8'b1111_1110;

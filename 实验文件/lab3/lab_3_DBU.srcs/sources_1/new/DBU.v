@@ -120,9 +120,13 @@ module DBU
 	);
 	
 	// led : m_rf_addr
+	initial
+	begin
+		led = 16'b0;
+	end
 	always @(posedge clk) begin
 		led = 16'h0;
-		if (~(|sel)) begin
+		if (sel == 3'b0) begin
 			led = {8'b0, m_rf_addr};
 		end
 		else begin
@@ -131,14 +135,19 @@ module DBU
 	end
 
 	always @(posedge clk) begin
-		if (inc_edge) begin
-			m_rf_addr = m_rf_addr + 1;
-		end
-		else if (dec_edge) begin
-			m_rf_addr = m_rf_addr - 1;
+		if (rst) begin
+			m_rf_addr = 0;
 		end
 		else begin
-			m_rf_addr = m_rf_addr;
+			if (inc_edge) begin
+				m_rf_addr = m_rf_addr + 1;
+			end
+			else if (dec_edge) begin
+				m_rf_addr = m_rf_addr - 1;
+			end
+			else begin
+				m_rf_addr = m_rf_addr;
+			end
 		end
 	end
 endmodule

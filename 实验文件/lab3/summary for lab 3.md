@@ -92,5 +92,3 @@ PC (program counter)
 
 Debug unit
 
-$LHS=\int_{-\infty}^{+\infty}\delta(t)\varphi(-t)\,d(-t)\\=-\int_{+\infty}^{-\infty}\delta(t)\varphi(-t)\,dt\\=RHS$
-

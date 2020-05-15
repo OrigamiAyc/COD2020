@@ -103,8 +103,8 @@ module sin_CPU
 
 	mux #(32) mux_wb (
 		.m(MemtoReg),
-		.in_1(Mem_Out),
-		.in_2(ALU_result),
+		.in_1(ALU_result),
+		.in_2(Mem_Out),
 		.out(write_data)
 	);
 
@@ -178,7 +178,7 @@ module sin_CPU
 				alu_ctrl = 3'b010;
 			end
 			2'b01: begin				// BEQ
-				alu_ctrl = 3'b010;
+				alu_ctrl = 3'b110;
 			end
 			2'b10: begin				// R-type
 				case (ins[5:0])
@@ -221,8 +221,10 @@ module sin_CPU
 	assign beq_result = npc + {extend_addr[29:0], 2'b00};
 	
 	// MEM
+	wire [WIDTH-1:0] read_mem_addr;
+	assign read_mem_addr = ALU_result / 4;
 	dist_data_ram memory (
-		.a(ALU_result),
+		.a(read_mem_addr),
 		.d(read_data_2),
 		.clk(clk),
 		.we(MemWrite),

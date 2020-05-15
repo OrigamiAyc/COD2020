@@ -64,15 +64,15 @@ module sin_CPU
 	assign pc_addr = PC[9:2];
 	// assign npc = NPC;
 	assign RegDst = regdst;
-	assign RegWrite = regwrite;
+	assign RegWrite = run ? regwrite : 0;
 	assign ALUSrc = alusrc;
 	assign MemRead = memread;
-	assign MemWrite = memwrite;
+	assign MemWrite = run ? memwrite : 0;
 	assign MemtoReg = memtoreg;
 	assign Branch = branch;
 	assign Jump = jump;
 	assign ALUOp = aluop;
-	assign status = {jump, branch, regdst, regwrite, memtoreg, memwrite, alu_ctrl, alusrc, ALU_Zero};
+	assign status = {Jump, Branch, RegDst, RegWrite, MemtoReg, MemWrite, ALU_ctrl, ALUSrc, ALU_Zero};
 	assign DBU_rf_addr = m_rf_addr[4:0];
 
 	// inst of a program
@@ -113,8 +113,8 @@ module sin_CPU
 
 	mux #(32) mux_wb (
 		.m(MemtoReg),
-		.in_1(Mem_Out),
-		.in_2(ALU_result),
+		.in_1(ALU_result),
+		.in_2(Mem_Out),
 		.out(write_data)
 	);
 
@@ -123,7 +123,7 @@ module sin_CPU
 	// 	NPC = PC + 32'd4;
 	// end
 
-	// inst of a reg_pile, IF
+	// inst of a reg_pile, ID
 	reg_file register_file (
 		.clk(clk),
 		.ra0(ins_reg_1),
@@ -190,7 +190,7 @@ module sin_CPU
 				alu_ctrl = 3'b010;
 			end
 			2'b01: begin				// BEQ
-				alu_ctrl = 3'b010;
+				alu_ctrl = 3'b110;
 			end
 			2'b10: begin				// R-type
 				case (ins[5:0])
@@ -233,8 +233,10 @@ module sin_CPU
 	assign beq_result = npc + {extend_addr[29:0], 2'b00};
 	
 	// MEM
+	wire [WIDTH-1:0] read_mem_addr;
+	assign read_mem_addr = ALU_result / 4;
 	dist_data_ram memory (
-		.a(ALU_result),
+		.a(read_mem_addr),
 		.d(read_data_2),
 		.dpra(m_rf_addr),
 		.clk(clk),

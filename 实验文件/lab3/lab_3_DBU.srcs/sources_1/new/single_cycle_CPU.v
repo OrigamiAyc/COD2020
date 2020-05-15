@@ -248,8 +248,11 @@ module sin_CPU
 		if (rst) begin
 			PC = 32'b0;
 		end
-		else begin
+		else if (run) begin
 			PC = fin_npc;
+		end
+		else begin
+			PC = PC;
 		end
 	end
 

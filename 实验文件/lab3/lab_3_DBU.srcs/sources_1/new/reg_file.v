@@ -49,7 +49,7 @@ module reg_file
 	end
 
 	always @(posedge clk) begin
-		if (we) begin
+		if (we & wa != 4'b0) begin
 			reg_file[wa] = wd;
 		end
 	end

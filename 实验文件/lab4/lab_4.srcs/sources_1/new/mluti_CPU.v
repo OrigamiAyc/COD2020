@@ -61,7 +61,7 @@ module multi_CPU
 
 	// control signal
 	wire PCWriteControl, PCWrite, PCwe;
-	wire lorD, MemtoReg, RegDst, ALUSrcA;	// ctrl sig for MUX
+	wire IorD, MemtoReg, RegDst, ALUSrcA;	// ctrl sig for MUX
 	wire [1:0] ALUSrcB, ALUOp, PCSource;
 	wire [2:0] ALU_ctrl;
 	wire MemRead, MemWrite;
@@ -69,7 +69,7 @@ module multi_CPU
 
 	// IF
 	mux MUX_mem_visit (
-		.m(lorD),
+		.m(IorD),
 		.in_0(PC),
 		.in_1(ALU_Out),
 		.out(mem_addr)
@@ -148,7 +148,7 @@ module multi_CPU
 		.op(op),
 		.PCWriteControl(PCWriteControl),
 		.PCWrite(PCWrite),
-		.lorD(lorD),
+		.IorD(IorD),
 		.MemtoReg(MemtoReg),
 		.RegDst(RegDst),
 		.ALUSrcA(ALUSrcA),

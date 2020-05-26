@@ -24,7 +24,7 @@ module control_unit(
 	input clk, rst,
 	input [5:0] op,
 	output reg PCWriteControl, PCWrite,
-	output reg lorD, MemtoReg, RegDst, ALUSrcA,	// ctrl sig for MUX
+	output reg IorD, MemtoReg, RegDst, ALUSrcA,	// ctrl sig for MUX
 	output reg [1:0] ALUSrcB, ALUOp, PCSource,
 	output reg MemRead, MemWrite,
 	output reg IRWrite, RegWrite
@@ -118,7 +118,7 @@ module control_unit(
 
 	// ctrl sig
 	always @(*) begin
-		{PCWriteControl, PCWrite, lorD, MemRead, MemWrite, MemtoReg, IRWrite, PCSource, ALUOp, ALUSrcB, ALUSrcA, RegWrite, RegDst} = 16'b0;
+		{PCWriteControl, PCWrite, IorD, MemRead, MemWrite, MemtoReg, IRWrite, PCSource, ALUOp, ALUSrcB, ALUSrcA, RegWrite, RegDst} = 16'b0;
 		case (curr_state)
 			INSTRUCTION_FETCH: begin
 				MemRead = 1;
@@ -135,7 +135,7 @@ module control_unit(
 			end
 			MEMORY_ACCESS_READ: begin
 				MemRead = 1;
-				lorD = 1;
+				IorD = 1;
 			end
 			WRITE_BACK_STEP: begin
 				RegWrite = 1;
@@ -143,7 +143,7 @@ module control_unit(
 			end
 			MEMORY_ACCESS_WRITE: begin
 				MemWrite = 1;
-				lorD = 1;
+				IorD = 1;
 			end
 			EXECUTION: begin
 				ALUSrcA = 1;
@@ -166,7 +166,7 @@ module control_unit(
 			ADDI_WRITE_BACK: begin
 				RegWrite = 1;
 			end
-			default: {PCWriteControl, PCWrite, lorD, MemRead, MemWrite, MemtoReg, IRWrite, PCSource, ALUOp, ALUSrcB, ALUSrcA, RegWrite, RegDst} = 'dz;
+			default: {PCWriteControl, PCWrite, IorD, MemRead, MemWrite, MemtoReg, IRWrite, PCSource, ALUOp, ALUSrcB, ALUSrcA, RegWrite, RegDst} = 'dz;
 		endcase
 	end
 endmodule

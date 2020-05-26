@@ -66,12 +66,12 @@ module multi_CPU
 	assign func = imme[5:0];
 	// assign a = A;
 	// assign b = B;
-	assign status = {PCSource, PCwe, lorD, MemWrite, IRWrite, RegDst, MemtoReg, RegWrite, ALU_CTRL, ALUSrcA, ALUSrcB, alu_zero};
+	assign status = {PCSource, PCwe, IorD, MemWrite, IRWrite, RegDst, MemtoReg, RegWrite, ALU_CTRL, ALUSrcA, ALUSrcB, alu_zero};
 	assign DBU_rf_addr = m_rf_addr[4:0];
 
 	// control signal
 	wire PCWriteControl, PCWrite, PCwe;
-	wire lorD, MemtoReg, RegDst, ALUSrcA;	// ctrl sig for MUX
+	wire IorD, MemtoReg, RegDst, ALUSrcA;	// ctrl sig for MUX
 	wire [1:0] ALUSrcB, ALUOp, PCSource;
 	wire [2:0] ALU_ctrl;
 	wire MemRead, MemWrite;
@@ -79,7 +79,7 @@ module multi_CPU
 
 	// IF
 	mux MUX_mem_visit (
-		.m(lorD),
+		.m(IorD),
 		.in_0(PC),
 		.in_1(ALU_Out),
 		.out(mem_addr)
@@ -162,7 +162,7 @@ module multi_CPU
 		.op(op),
 		.PCWriteControl(PCWriteControl),
 		.PCWrite(PCWrite),
-		.lorD(lorD),
+		.IorD(IorD),
 		.MemtoReg(MemtoReg),
 		.RegDst(RegDst),
 		.ALUSrcA(ALUSrcA),

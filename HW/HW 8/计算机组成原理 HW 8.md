@@ -54,7 +54,7 @@ $480\times(1+7+1+1)=4800\ bits/s$
 
 （1）$2\times6=12$ 个面可以用
 
-（2）$(33-22+1)\times40=480$ 个柱面
+（2）$\dfrac{1}{33-22}\times40=220$ 个柱面
 
 （3）$\begin{align}2\pi\times22\times400\times480\times12&=304128000\ bits\\&=38016000\ B\\&=37125\ kiB\\&\approx36.25\ MiB\end{align}$
 

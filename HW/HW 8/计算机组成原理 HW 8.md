@@ -50,13 +50,15 @@ $480\times(1+7+1+1)=4800\ bits/s$
 
 ![from_mbinary_on_jianshu](https://upload-images.jianshu.io/upload_images/7130568-50fae3ad59f3cbe3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-取 $\pi=3$
-
 （1）$2\times6=12$ 个面可以用
 
-（2）$\dfrac{1}{33-22}\times40=220$ 个柱面
+（2）$\dfrac{33-22}{2}\times40=220$ 个柱面
 
-（3）$\begin{align}2\pi\times22\times400\times480\times12&=304128000\ bits\\&=38016000\ B\\&=37125\ kiB\\&\approx36.25\ MiB\end{align}$
+（3）
 
-（4）$\begin{gather}3600 r/min = 60 r/s\\60\times2\pi\times22\times400=3168000\ bits/s\end{gather}$
+​	$\begin{align}\pi\times22\times400\times220\times12&\approx72985480.5\ bits\\&\approx9123185\ B\\&\approx8909\ kiB\\&\approx8.7\ MiB\end{align}$
+
+（4）
+
+​	$\begin{align}3600 r/min &= 60 r/s\\60\times\pi\times22\times400&\approx1658761\ bits/s\\&\approx207345\ B/s\\&\approx202\ kiB/s\end{align}$
 

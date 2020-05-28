@@ -2,7 +2,7 @@
 
 ### 简介
 
-上学期模数 里面是模数实验讲义，欢迎提issue或者QQ (2787392742) 或邮箱 (L.G.Stark@outlook.com) 联系讨论
+上学期模数 里面是模数实验讲义，欢迎提issue或者QQ (2787392742) 或邮箱 (L.G.Stark@outlook.com) 或 iMessage/Skype (ID均为 L.G.Stark@outlook.com) 联系讨论
 
 ### 内容
 

@@ -32,7 +32,7 @@
 
 设计采用普林斯顿结构，数据通路如下图所示
 
-![](https://github.com/Lapland-Stark/COD2020/blob/master/lab_files/lab4/data_path_multi_CPU.jpeg?raw=true)
+![data_path](data_path_multi_CPU.jpeg?raw=true)
 
 ##### Multi_CPU
 
@@ -271,4 +271,8 @@ endmodule
 
 ###### 设计思路
 
-多周期CPU
+多周期CPU相比于单周期CPU，由于一条指令需要多个时钟周期完成，故需要增加寄存器来保存数据，不过由于从ID之后PC就不再改变了，所以不需要像流水线一样添加好多段间寄存器
+
+##### MUX
+
+###### 源代码

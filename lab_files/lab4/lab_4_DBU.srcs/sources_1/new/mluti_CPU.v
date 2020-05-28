@@ -230,7 +230,7 @@ module multi_CPU
 	// MEM
 	// PC final
 	multi_mux MUX_PC (
-		.n(2'd3),
+		.n(2'd2),
 		.m(PCSource),
 		.in_0(alu_out),
 		.in_1(ALU_Out),

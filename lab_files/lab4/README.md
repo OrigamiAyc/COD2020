@@ -44,3 +44,5 @@ PC的刷新使能是PCwe，来自于PCWrite (缘于普通的PC+4，刷新但不�
 
 需要自行补充，可以参考这个：
 
+![addi](images/data_path_multi_CPU_FSM.png)
+

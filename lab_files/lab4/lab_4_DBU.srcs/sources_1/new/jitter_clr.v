@@ -21,19 +21,19 @@
 
 
 module jitter_clr(
-    input clk,
-    input button,
-    output button_clean
-    );
+	input clk,
+	input button,
+	output button_clean
+	);
 
-    reg [3:0] cnt;
+	reg [3:0] cnt;
 
-    always @(posedge clk) begin
-        if (button == 1'b0) begin
-            cnt <= 4'h0;
-        end
-        else if (cnt < 4'h8) begin
-            cnt <= cnt + 1'b1;
-        end
-    end
+	always @(posedge clk) begin
+		if (button == 1'b0) begin
+			cnt <= 4'h0;
+		end
+		else if (cnt < 4'h8) begin
+			cnt <= cnt + 1'b1;
+		end
+	end
 endmodule

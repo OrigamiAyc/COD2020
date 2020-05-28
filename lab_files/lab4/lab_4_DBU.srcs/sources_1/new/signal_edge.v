@@ -21,20 +21,20 @@
 
 
 module signal_edge(
-    input clk,
-    input button,
-    output button_edge
-    );
+	input clk,
+	input button,
+	output button_edge
+	);
 
-    reg button_r1, button_r2;
+	reg button_r1, button_r2;
 
-    always @(posedge clk) begin
-        button_r1 <= button;
-    end
+	always @(posedge clk) begin
+		button_r1 <= button;
+	end
 
-    always @(posedge clk) begin
-        button_r2 <= button_r1;
-    end
+	always @(posedge clk) begin
+		button_r2 <= button_r1;
+	end
 
-    assign button_edge = button_r1 & ~button_r2;
+	assign button_edge = button_r1 & ~button_r2;
 endmodule

@@ -20,4 +20,7 @@ m_rf_addr在这里是9位。。。
 
 **关于PC**
 
-PC的刷新使能是PCwe，来自于PCWrite (缘于普通的PC+4，刷新但不执行) 或PCWriteControl且ALUZero (缘于分支跳转指令执行成功)，所以每一条指令只有IF周期PC显示为这一条指令的值
+PC的刷新使能是PCwe，来自于PCWrite (缘于普通的PC+4，刷新但不执行) 或PCWriteControl且ALUZero (缘于分支跳转指令执行成功)，所以每一条指令只有IF周期PC显示为这一条指令的值，如下框中为BEQ指令的执行区间：
+
+![BEQ](BEQ_exe_cycles.png)
+

@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 2020/05/12 12:05:36
-// Design Name: 
+// Design Name:
 // Module Name: sin_CPU
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -231,14 +231,14 @@ module sin_CPU
 
 	assign PCSrc = ALU_Zero & Branch;
 	assign beq_result = npc + {extend_addr[29:0], 2'b00};
-	
+
 	// MEM
 	wire [WIDTH-1:0] read_mem_addr;
 	assign read_mem_addr = ALU_result / 4;
 	dist_data_ram memory (
 		.a(read_mem_addr),
 		.d(read_data_2),
-		.dpra(m_rf_addr),
+		.dpra(m_rf_addr << 2),
 		.clk(clk),
 		.we(MemWrite),
 		.spo(Mem_Out),

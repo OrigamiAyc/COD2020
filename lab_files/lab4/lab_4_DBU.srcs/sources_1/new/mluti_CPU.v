@@ -1,22 +1,22 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:
+// Engineer:
+//
 // Create Date: 2020/05/22 02:30:52
-// Design Name: 
+// Design Name:
 // Module Name: mluti_CPU
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Project Name:
+// Target Devices:
+// Tool Versions:
+// Description:
+//
+// Dependencies:
+//
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -88,7 +88,7 @@ module multi_CPU
 	dist_Memory Memory (
 		.a(mem_addr[10:2]),
 		.d(B),
-		.dpra(m_rf_addr),
+		.dpra(m_rf_addr << 2),
 		.clk(clk),
 		.we(MemWrite),
 		.spo(mem_data),
@@ -247,7 +247,7 @@ module multi_CPU
 				PC <= pc_final;
 			end
 			else
-				PC <= PC;			
+				PC <= PC;
 		end
 	end
 

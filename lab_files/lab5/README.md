@@ -1,4 +1,4 @@
-Summary for lab 5
+# Summary for lab 5
 
 <p align="right">by 鸢一折纸</p>
 
@@ -48,6 +48,8 @@ Summary for lab 5
 
 > **关于jump**
 
+那里面没有实现 jump
+
 最高4位是取PC还是PC+4呢（（
 
 当然是PC+4了（多周期用PC是因为第一个周期不是已经把PC变成PC + 4了嘛
@@ -55,6 +57,24 @@ Summary for lab 5
 > **关于Hazard detection unit**
 
 作用见上面的interlock
+
+<font color=red>CAUTION !!!</font>
+
+<font color=coral>下面这个适用于BEQ在EX段跳转</font>
+
+- 这个判断条件原理如这个图所示
+- ![SW-R_type](pictures/SW_R_type.png)
+- 访存目标寄存器恰好在下一条指令的EX段需要用到
+- `if (ID/EX.MemRead and
+	  ((ID/EX.RegisterRt = IF/ID.RegisterRs) or 
+	 (ID/EX.RegisterRt = IF/ID.RegisterRt))) stall the pipeline`
+- 如果 (不是BEQ / BNE / SW) 的`I`类型指令无须考虑 `ID/EX.RegisterRt = IF/ID.RegisterRt` 这个条件 (因为rt操作数是写回目标寄存器)
+
+如果BEQ在ID段就有可能需要nop两个周期 (SW+BEQ)
+
+> 关于
+
+> **关于Forward unit**
 
 实现如下：（摘自COD 5th 4.7）
 
@@ -84,7 +104,62 @@ Summary for lab 5
 			and (EX/MEM.RegisterRd ≠ ID/EX.RegisterRt))
 		and (MEM/WB.RegisterRd = ID/EX.RegisterRt)) ForwardB = 01`
 
+> **关于IF.Flush**
+
+好多人不知道这是干什么的 (包括我)···
+
+想一下延迟槽 (就是转移指令后面预执行的那一部分)，读进去的指令会在跳转成功之后继续执行，所以需要把它踢出去
+
+有大佬说可以把这个信号和 hazard detection unit 的清空ID/EX寄存器信号合并，但是需要修改一下两个控制单元···
+
+> **关于ALU**
+
+ALU的控制信号B (选择寄存器数据还是立即数) 需要和forwarding unit的信号合并
+
+#### 指令
+
+> 关于BEQ
+
+BEQ指令可以用 3个周期，或者2个周期。两个周期的好处当然是延迟槽变浅了，但是对于相关的处理会出现一些问题。。
+
+考虑一下这个冒险：
+
+![BEQ_hazard](pictures/BEQ_hazard.png)
+
+当BEQ指令的一个数据来源寄存器是上一条指令的写回目标寄存器，
+
+#### 访存
+
+没有写数据的port···自己从ID/EX段间寄存器引B出来
+
 #### 坑
 
 所有调用模块都需要一个wire类型变量来链接输出端口！！！
+
+> 关于红字 XXXXXXX.....
+
+首先，红字代表未知或者不确定的信号
+
+有以下已知可能错误原因
+
+1. 多驱动，数据冲突 (有两个或以上的输入，且没有多选器)
+2. 没有初始化 (加 **rst** 信号或者 **initial** 赋初值)
+3. 信号位宽不符 (有时候也会变成高阻态)
+4. 存储器访问到了垃圾地址
+
+> 关于MUX
+
+自己走一遍哪个口是1还是0要和控制单元一致！！！
+
+~~端口太多会使人忘记写out (确信)~~
+
+> 关于寄存器内部转发
+
+由于寄存器堆写是需要一个时钟上升沿的，所以实际上寄存器值的改变是在WB段之后，如图所示
+
+![Reg_available](pictures/Logically_available_C6.png)
+
+所以为了寄存器内部数据正常可用，则可以在写入的时候就转发到输出端口处 (我集成在了reg_file内部)，如下图中的reg到reg的转发：
+
+![forwarding](pictures/data_forwarding.png)
 

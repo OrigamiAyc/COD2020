@@ -68,9 +68,12 @@
 - `if (ID/EX.MemRead and
 	  ((ID/EX.RegisterRt = IF/ID.RegisterRs) or 
 	 (ID/EX.RegisterRt = IF/ID.RegisterRt))) stall the pipeline`
-- 如果 (不是BEQ / BNE / SW) 的`I`类型指令无须考虑 `ID/EX.RegisterRt = IF/ID.RegisterRt` 这个条件 (因为rt操作数是写回目标寄存器)
+- (不是BEQ / BNE / SW) 的`I`类型指令和`J`类型指令无须考虑 `ID/EX.RegisterRt = IF/ID.RegisterRt` 这个条件 (因为rt操作数是写回目标寄存器)
 
-如果BEQ在ID段就有可能需要nop两个周期 (SW+BEQ)
+如果BEQ在ID段就有可能需要nop💭两个周期 (SW+BEQ)
+
+- 在上面的基础上需要把BEQ、BNE指令nop两个周期 (或者将bypassing拓展到ID段去)
+- 【注】SW也可以不💭
 
 > 关于
 

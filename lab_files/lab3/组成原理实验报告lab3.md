@@ -1094,7 +1094,7 @@ endmodule
 
 修改之后的数据通路如下所示：（彩色部分）
 
-![data_path_sig_CPU_think](/Users/lapland/Downloads/data_path_sig_CPU_think.png)
+![data_path_sig_CPU_think](data_path_sig_CPU_think.png)
 
 #### 指令分析
 

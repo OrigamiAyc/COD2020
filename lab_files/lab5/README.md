@@ -44,16 +44,6 @@
 	- 为了避免后面段重复执行
 - 将 ID/EX 的控制信号清零，即 EX 段暂停一个周期
 
-### 控制信号
-
-> **关于jump**
-
-那里面没有实现 jump
-
-最高4位是取PC还是PC+4呢（（
-
-当然是PC+4了（多周期用PC是因为第一个周期不是已经把PC变成PC + 4了嘛
-
 > **关于Hazard detection unit**
 
 作用见上面的interlock
@@ -68,7 +58,7 @@
 - ![SW-R_type](pictures/LW_R_type.png)
 - 访存目标寄存器恰好在下一条指令的EX段需要用到，但MEM段 (而不是像算术指令那样EX) 才产生结果，故只得💭
 - `if (ID/EX.MemRead and
-	  ((ID/EX.RegisterRt = IF/ID.RegisterRs) or 
+	  ((ID/EX.RegisterRt = IF/ID.RegisterRs) or
 	 (ID/EX.RegisterRt = IF/ID.RegisterRt))) stall the pipeline`
 - (不是BEQ / BNE / SW) 的`I`类型指令和`J`类型指令无须考虑 `ID/EX.RegisterRt = IF/ID.RegisterRt` 这个条件 (因为rt操作数是写回目标寄存器)
 
@@ -77,6 +67,17 @@
 - 在上面的基础上需要把BEQ、BNE指令nop两个周期 (或者将bypassing拓展到ID段去，并💭一个周期)
 - 这个我是在解决不了了Orzzzzzzzzzzzz我没有办法让左边那个寄存器堆等一整个mem时间再读进去并把值传递给beq。。。不过我觉得吧时钟周期那么长，还是可以接受的 (事实证明可以)
 - 【注】SW也可以不💭：加一个从WB到MEM的forwarding就可以了。。
+
+
+### 控制信号
+
+> **关于jump**
+
+那里面没有实现 jump
+
+最高4位是取PC还是PC+4呢（（
+
+当然是PC+4了（多周期用PC是因为第一个周期不是已经把PC变成PC + 4了嘛
 
 > **关于PCwe**
 
@@ -111,12 +112,12 @@ PCen同时受 rst、 jump | zero & branch (来源于跳转指令) 和 PCWrite (�
 		 and (MEM/WB.RegisterRd ≠ 0)
 		 and (MEM/WB.RegisterRd = ID/EX.RegisterRt)) ForwardB = 01`
 - MEM *hazard* (considering EX)
-	- `if (MEM/WB.RegWrite 
-		and (MEM/WB.RegisterRd ≠ 0) 
-		and not(EX/MEM.RegWrite and (EX/MEM.RegisterRd ≠ 0) 
-			and (EX/MEM.RegisterRd ≠ ID/EX.RegisterRs)) 
+	- `if (MEM/WB.RegWrite
+		and (MEM/WB.RegisterRd ≠ 0)
+		and not(EX/MEM.RegWrite and (EX/MEM.RegisterRd ≠ 0)
+			and (EX/MEM.RegisterRd ≠ ID/EX.RegisterRs))
 		and (MEM/WB.RegisterRd = ID/EX.RegisterRs)) ForwardA = 01`
-	- `if (MEM/WB.RegWrite 
+	- `if (MEM/WB.RegWrite
 		and (MEM/WB.RegisterRd ≠ 0)
 		and not(EX/MEM.RegWrite and (EX/MEM.RegisterRd ≠ 0)
 			and (EX/MEM.RegisterRd ≠ ID/EX.RegisterRt))
@@ -130,9 +131,6 @@ PCen同时受 rst、 jump | zero & branch (来源于跳转指令) 和 PCWrite (�
 
 有大佬说可以把这个信号和 hazard detection unit 的清空ID/EX寄存器信号合并，但是需要修改一下两个控制单元···
 
-> **关于ALU**
-
-ALU的控制信号B (选择寄存器数据还是立即数) 需要和forwarding unit的信号合并
 
 ### 指令
 
@@ -149,6 +147,12 @@ BEQ指令可以用 3个周期，或者2个周期。两个周期的好处当然�
 ### 访存
 
 没有写数据的port···自己从ID/EX段间寄存器引B出来
+
+### 关于ALU的B操作数
+
+ForwardB 这个控制信号不能和 ALUSrc 合并！！！因为这涉及到有的 I-type 指令需要用到寄存器堆的读portB (没错就是你`sw`)，但是由于转发，实际上应该读的是 ForwardB 信号筛选之后的那个数据 final_b (但是这个信号不会进ALU，而是立即数进去了) 所以，这个时候`sw`需要写进去的数据就被冲掉了……
+
+解决方案是用两个MUX…一个用来forward确定read_port_B的最终正确值，另外一个用来在这个转发结果和立即数直接选择，确定ALU_B的值
 
 ## 坑
 

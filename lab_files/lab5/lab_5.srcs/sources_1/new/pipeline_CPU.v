@@ -57,8 +57,9 @@ module pipeline_CPU
 	wire [4:0] rs, rt, rd;						// ID fragments, EX stage
 	wire [5:0] func;							// for ALU Control Unit, EX stage
 	wire [WIDTH-1:0] alu_a, alu_b, alu_result;	// ALU input/output, EX stage
-	wire ALU_Zero, cf, of, sf;					// for unused ports of ALU
-	wire [4:0] rw_addr;					// chosen register write addr
+	wire ALU_Zero, cf, of, sf;					// for unused ports of ALU, EX stage
+	wire [WIDTH-1:0] final_b;
+	wire [4:0] rw_addr;							// chosen register write addr, EX stage
 	wire [WIDTH-1:0] mem_out;					// MEM_IP out, MEM_stage
 	wire [WIDTH-1:0] reg_data;					// WB stage
 	wire [4:0] reg_addr;						// WB stage
@@ -277,27 +278,43 @@ module pipeline_CPU
 	);
 
 	// AMB Unit (AMB for ALU_MUX_B)
-	always @(*) begin
-		if (AluSrc_DE) begin
-			ALU_MUX = 2'd3;
-		end
-		else begin
-			ALU_MUX = ForwardB;
-		end
-	end
+	// always @(*) begin
+	// 	if (AluSrc_DE) begin
+	// 		ALU_MUX = 2'd3;
+	// 	end
+	// 	else begin
+	// 		ALU_MUX = ForwardB;
+	// 	end
+	// end
 
-	multi_mux MUX_ALU_B (
-		.n(2'd3),
-		.m(ALU_MUX),
+	// multi_mux MUX_ALU_B (
+	// 	.n(2'd3),
+	// 	.m(ALU_MUX),
+	// 	.in_0(B),
+	// 	.in_1(reg_data),
+	// 	.in_2(ALUOut),
+	// 	.in_3(addr_imme),
+	// 	.out(alu_b)
+	// );
+
+	multi_mux MUX_FINAL_B (
+		.n(2'd2),
+		.m(ForwardB),
 		.in_0(B),
 		.in_1(reg_data),
 		.in_2(ALUOut),
-		.in_3(addr_imme),
-		.out(alu_b)
+		.out(final_b)
 	);
 
 	assign addr_imme = IMM;
 	assign func = IMM[5:0];
+
+	mux MUX_ALU_B (
+		.m(AluSrc_DE),
+		.in_0(final_b),
+		.in_1(IMM),
+		.out(alu_b)
+	);
 
 	// ALU Control Unit
 	always @(*) begin
@@ -409,7 +426,7 @@ module pipeline_CPU
 	// EX/MEM inter-stages registers
 	always @(posedge clk) begin
 		ALUOut <= alu_result;
-		WMD <= B;
+		WMD <= final_b;
 		WAE <= rw_addr;
 		MemRead_EM <= MemRead_DE;
 		MemWrite_EM <= MemWrite_DE;

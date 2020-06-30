@@ -97,28 +97,6 @@ module reg_file
 			end
 		endcase
 	end
-	
-	// control from outside
-	// always @(*) begin
-	// 	case (forwarding)
-	// 		2'b00: begin
-	// 			rd0 = reg_file[ra0];
-	// 			rd1 = reg_file[ra1];
-	// 		end
-	// 		2'b01: begin
-	// 			rd0 = wd;
-	// 			rd1 = reg_file[ra1];
-	// 		end
-	// 		2'b10: begin
-	// 			rd0 = reg_file[ra0];
-	// 			rd1 = wd;
-	// 		end
-	// 		default: begin
-	// 			rd0 = 'dz;
-	// 			rd1 = 'dz;
-	// 		end
-	// 	endcase
-	// end
 
 	integer i;						// loop varible
 	initial begin

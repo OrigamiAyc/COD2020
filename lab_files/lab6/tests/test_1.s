@@ -10,6 +10,7 @@ _Input:
 		addi	$t1, $0, 1			# $t1 = $0 + 1					12
 		addi	$t2, $0, 1			# $t2 = $0 + 1					16
 		addi	$t3, $0, 9			# $t3 = $0 + 9					20
+_Stack:
 		sw		$s0, 0($sp)			# store to stack top			24
 		sw		$s1, -4($sp)		# store to stack				28
 		j		_Sort				# jump to _Sort					32
@@ -17,12 +18,12 @@ _Sort:
 		slt		$t0, $s0, $s1		# if $s0 < $s1, $t0 = 1			36
 		beq		$t0, $t2, _Cal		# if $t0 == $t1 then _Cal		40
 				# SWAP
-				lw		$s0, -4($sp)	# save primary $s1 to $s0		44
+				lw		$s0, -4($sp)# save primary $s1 to $s0		44
 				lw		$s1, 0($sp)	# save primary $s0 to $s1		48
 _Cal:
 		add		$s0, $s1, $s0		# $s0 = $s1 + $s0				52
 		addi	$t1, $t1, 1			# $t1 = $t1 + 1					56
-		bne		$t1, $t3, _Sort		# if $t1 != $t3 then _Sort		60
+		bne		$t1, $t3, _Stack	# if $t1 != $t3 then _Stack		60
 _Output:
 		sw		$s0, -32768($0)		# to LED						64
 		j		_Success			# jump to _Success				68

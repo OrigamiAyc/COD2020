@@ -25,3 +25,9 @@
 - lab 5
 
 流水线CPU
+
+请注意我除了lab6以外的信号去抖动文件 `jitter_clr.v` 都缺少下面一句：
+
+```verilog
+assign button_clean = cnt[3];
+```

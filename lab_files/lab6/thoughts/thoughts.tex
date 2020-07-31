@@ -1,0 +1,207 @@
+\documentclass[]{report}
+\usepackage[hmargin=1.25in,vmargin=1in]{geometry} %调整页边距
+% \usepackage[inner=1in,outer=1.25in]{geometry} %书籍左右不等宽排版
+\usepackage[utf8]{inputenc}
+% \usepackage[]{ctex} %据说可以直接调用诸如 \kaishu \fangsong \heiti 的命令修改字体
+\usepackage[]{xeCJK}
+\setCJKmainfont[BoldFont = STHeiti, ItalicFont = STKaiti]{Songti SC Light} %中文主字体
+\setCJKsansfont[BoldFont = Weibei SC, ItalicFont = Xingkai SC Light]{Xingkai SC} %中文无衬线字体
+\setCJKmonofont[BoldFont = Libian SC, ItalicFont = STFangsong]{Yuanti SC Light} %中文等宽字体
+\setmainfont{Times New Roman} %\rmfamily
+\setsansfont{Comic Sans MS} %\sffamily
+\setmonofont{Courier} %\ttfamily
+
+\usepackage{markdown} %使用markdown语法，在编译时需要打开 shell-escape 标记，即 $ xelatex --shell-escape example.tex
+\markdownSetup{hashEnumerators = true} %允许使用 #. 的方式编写有序列表
+\markdownSetup{inlineFootnotes = true} %允许使用脚注形式的超链接，调用语法为 [anchor](uri), ^[footnote], <uri>
+\markdownSetup{fencedCode = true} %以反引号和缩进来插入代码段，相当于 verbatim
+\markdownSetup{
+  pipeTables = true
+} %支持表格的用法 (图片已经在markdown包里面支持了)
+\usepackage{booktabs} %解决三线表的线条粗细问题
+
+\usepackage{graphicx} %插入图片
+\usepackage{makeidx}
+
+\usepackage{tikz} %带圈字符
+\usepackage{etoolbox} %带圈字符 (提供robustify)
+\usepackage{enumitem}
+\newcommand*{\circled}[1]{\lower.7ex\hbox{\tikz\draw (0pt, 0pt)%
+    circle (.5em) node {\makebox[1em][c]{\small #1}};}} %新定义命令：带圈字符
+\robustify{\circled}
+% \usepackage{enumerate} %有序列表
+
+\usepackage{hyperref} %超链接
+\markdownSetup{
+  inlineFootnotes = true,
+  renderers = {
+    link = {\href{#3}{#1}},
+  }
+} % markdown块中使用直接点进去的超链接
+% \setlist[enumerate,1]{label=(\arabic*).,font=\textup,leftmargin=7mm,labelsep=1.5mm,topsep=0mm,itemsep=-0.8mm}
+% \setlist[enumerate,2]{label=(\alph*).,font=\textup,leftmargin=7mm,labelsep=1.5mm,topsep=-0.8mm,itemsep=-0.8mm}
+
+\title{Summary for COD lab 6}
+\author{Tobiichi Origami}
+\date{\today}
+
+\linespread{1.3} %行间距为1.3倍默认间距 (1.2倍字符宽度)
+
+\makeindex
+
+\begin{document}
+	\maketitle
+
+
+	\begin{center}
+		\chapter[]{系统总线\footnote{唐书第三章}}
+	\end{center}
+		\section[]{总线标准\footnote{Ch 3.3.3}}\par
+			\emph{所谓总线标准，可视为系统与各模块、模块与模块之间一个互联的标准界面。这个界面对它两端的模块都是透明的……按总线标准设计的接口都可以视为通用接口}\par
+			重点关注：PCIe总线、USB总线、type-C线和lighting线？
+		\section[]{总线结构\footnote{Ch 3.4}}\par
+			参考这张图（其中的扩展总线接口用DMA）\par
+			\includegraphics[scale = 0.25]{../pictures/Triple_Bus.png}\par
+			所以需要设计一个cache（模块调用直接连到MEM段）
+		\section[]{总线控制\footnote{Ch 3.5}}\par
+			\emph{包括判优控制（或称仲裁逻辑）和通信控制}
+			\subsection{总线判优控制}\par
+				分为集中式和分布式两种：集中式又包括链式查询(会出现饿死的情况)、计数器定时查询 (可以通过计数器不清零来实现没有优先级)、独立请求 (硬件复杂)
+			\subsection{总线通信控制}\par
+				一次总线操作分为4个周期：申请分配、寻址、传数、结束 (对于仅有一个\textbf{主模块}的简单系统，无需申请、分配和撤除)。通信又分为同步和异步，同步通信有着固定的传输周期任务规定\footnote{唐书P60，电子书P72}，并 (可能采用SYN标识开始)；而异步通信采用握手的方式，分为不/半/全互锁三种 (即一/二/三次握手)，对于传数的数据有打包处理 (一帧 = 1起始位(低电平) + 5～8个数据位+1个奇偶校验位 + 1/1.5/2个终止位(高电平))，任意两帧之间任意长度高电平。类似的还有半同步通信\footnote{唐书P64，电子书P76}和分离式通信。
+
+	\begin{center}
+		\chapter[]{输入输出系统\footnote{唐书第五章}}
+	\end{center}
+		\section{概述}
+			主机和I/O设备之间联络的方式，分为：\par
+			\begin{enumerate}[label = (\arabic{*})]
+				\item 立即响应
+				\item 异步工作采用应答信号联络，如前所述，用起始和终止信号来建立主从设备之间的联系
+				\item 同步工作采用同步时标联络
+			\end{enumerate}
+			异步工作如图所示：如同\par
+			\includegraphics[scale = 0.25]{../pictures/IO_Contaction.png}\par
+			\subsection{I/O设备与主机信息传送的控制方式}\par
+				\textbf{这个超级重点}\par
+				共有5种方式：程序查询方式、程序中断方式、直接存储器存取方式 (DMA)、I/O通道方式、I/O处理机方式。主要用前三种，下面对前三种逐一整理\par
+				\begin{enumerate}[label = (\arabic{*})]
+					\item 程序查询方式\\当现行程序需要启动某I/O设备工作时，将查询程序插入到正在运行到程序中。只要一启动I/O设备，CPU就不断查询I/O设备的准备情况，从而终止了原程序的执行。这种方式相当于进程调度，context switch踢出去原有进程进入waiting状态，然后执行其所需的I/O进程 (貌似略去了ready状态)。\textit{查询通过做I/O指令完成：对I/O接口的某些控制寄存器置“0”或“1”，用于控制设备进行相关工作；测试设备的某些状态，如“忙”、“就绪”等，以便决定下一步操作；传送数据}
+					\item 程序中断方式\\CPU在启动I/O设备后，继续执行现有程序，只是I/O设备准备就绪向CPU发出中断请求后才予以响应。这个方式是中断处理，需要保护现场 (当然前面那个也需要)，详情见后面中断处理部分。程序中断方式不仅需要在硬件上增加相应的电路，而且在软件上面也需要编制相应的中断服务程序 (详见 5.3和5.5)
+					\item DMA方式\\ (5.6)
+				\end{enumerate}
+			\textbf{关于程序中断方式等操作等一点Notes}\par
+				{\itshape 注意这张图里面第三行的“尚未”应当去掉。意即在一次中断方式的I/O操作中，首先如果待传送数据过多，则拆分到不同的时钟周期来传送 (可以采用并行传输，二者并不影响)；其次在CPU需要用到I/O时，先启动并继续执行现有程序，等待设备的中断到达之后，开始执行I/O的取数据 (从接口的buffer经CPU传送至内存)；在这个传输过程中，可能会发生诸如异常处理中断之类的，需要按照中断处理机制嵌套递归；否则待这一次传输全部结束之后，才开始后面的CPU指令执行 (可以采取关闭中断的措施，如互斥锁、MASK)}\par
+				\includegraphics[scale = 0.25]{../pictures/recursive_interrupt.png}
+		\section{I/O接口}
+			使用接口的理由 (接口的作用)：\\数据缓冲 (读取速度不一样)、串 - 并格式的转换 (CPU并行)、电平转换、传送 (CPU到I/O的) 控制命令、监视设备工作状态 (忙、就绪、错误、中断请求)。注意端口 (Port) 是接口 (Interface) 电路中的一些寄存器 (接口还包括控制逻辑电路)，包括数据端口、控制端口、状态端口。接口与总线、设备的连接如图所示：\par
+			\includegraphics[scale = 0.25]{../pictures/IO_Interafce.png}\par
+			\includegraphics[scale = 0.25]{../pictures/IO_Interface_2.png}\par
+			现代计算机大多采用三态逻辑电路来构成总线。\par\par
+			接口的功能和组成：\\选址功能 (片选，设备选择线上的设备码与本设备的设备码相符时，发出设备选中信号SEL)、传送命令的功能 (设有命令寄存器(存放I/O指令中的指令码，受SEL控制写使能) 和命令译码器)、传送数据的功能 (有数据暂存寄存器)、反映I/O设备工作状态的功能 ( $^{eg.}$ 用完成触发器D和工作触发器B来标志设备所处的状态：D = B = 0为暂停状态；D = 1, B = 0为就绪状态；D = 0, B = 1为正忙状态。还可以另外设置中断请求触发器INTR (为1发出中断请求) 和屏蔽触发器MASK (与INTR配合使用 (8.4)))\par
+		\section{程序查询方式}
+			\subsection{程序查询流程}
+				当I/O设备较多时，优先级查询 (轮询)。通常要执行三条指令：测试指令 (测试设备是否准备就绪)、传送指令 (处理I/O请求)、转移指令 (未就绪，转移到下一个设备询问)。程序流程如下图所示：\par
+				\includegraphics[scale = 0.25]{../pictures/program_ask.png}\par
+				\includegraphics[scale = 0.23]{../pictures/Program_ask_2.png}\par
+				该方式必须将I/O查询程序插入到现有到程序中，故此方式包括以下几项：
+				\begin{enumerate}[label=\circled{\arabic*}]
+					\item 由于需要占用CPU的寄存器，所以需要先保护起来
+					\item 由于转送是一批数据，因此需要先设置I/O设备与主机交换的计数值
+					\item 设置欲传送数据在主存缓冲区的首地址
+					\item CPU启动I/O设备
+					\item 将I/O设备中的设备状态标志取至CPU并测试设备是否就绪 (在设备接口电路里面输入缓冲满或者输出缓冲空)，没有就等着
+					\item CPU执行I/O指令，读或者写一个数据，并将设备的状态标志\textbf{复位}
+					\item 修改主存地址
+					\item 修改计数值 (原码 --；负数的补码 ++)
+					\item 判断计数值，若不为0，重新启动外设 (即跳转至\circled{6})
+					\item 结束I/O传送，继续执行现有程序
+				\end{enumerate}
+			\subsection[]{程序查询方式的接口电路\footnote{唐书P192，电子书204}}
+		\section{程序中断方式}
+			\textit{有关中断的详细内容在第八章}\par
+			\subsection{程序中断方式的接口电路}
+				设备部件：\par
+				1. 中断请求触发器和中断屏蔽触发器\\
+					当且仅当设备准备就绪 (D = 1)，且该设备未被屏蔽 (MASK = 0)，CPU的中断查询信号可以 (INTR = 1)\par
+				2. 排队器\\
+					就I/O中断而言，速度越高的设备优先级越高。硬件排队器可以在CPU里面设置一个计数器 (图8.25)，也可以用链式排队器，如图所示：\par
+					\includegraphics[scale = 0.25]{../pictures/linked_queue_in_program_break.png}\par
+					当各个中断源均无中断请求时，各个$\overline{\mathbf{INTR_i}}$为高电平，其$\mathbf{INTP_i}'$。当某个中断源提出中断请求时，就会迫使优先级比他低的中断源的INTP变为低电平，从而阻止其中断请求\par
+				3. 中断向量地址形成部件 (设备编码器)\\
+					中断向量形成部件的输入是来自排队器的输出$\mathbf{INTP}_1$,\dots$\mathbf{INTP_n}$，而其输出则是一个中断向量 (二进制代码表示)，其实质是一个编码器。这里必须分清\textbf{向量地址}和\textbf{中断服务程序的入口地址} ({\sffamily{都在主存里面}}) 是两个不同的概念，他们之间的关系类似于一个哈希映射，如图所示：\par
+					\includegraphics[scale = 0.23]{../pictures/Device_Number_hash.png}\par
+				4. 程序中断方式接口电路的基本组成 (如图)\par
+					\includegraphics[scale = 0.2]{../pictures/Program_Interrupt_Interface.png}\par
+				各问题的处理方式：
+				({\ttfamily\textit {来自}}{\sffamily PPT})\par
+				\begin{enumerate}[label={\sffamily(\alph{*})}]
+					\item 各中断源如何向CPU提出请求 ?(INTR, INTA)
+					\item 各中断源同时提出请求怎么办 ? (中断判优-程序查询，硬件排队-集中、分布)
+					\item CPU什么条件、什么时间、以什么方式响应中断 ? (指令周期结束，中断隐指令)
+					\item 如何保护现场 ?(中断隐指令断点、ISR、堆栈)
+					\item 如何寻找入口地址 ?(硬件向量，软件查询)
+					\item 如何恢复现场，如何返回 ?(中断隐指令断点、ISR、堆栈)
+					\item 处理中断的过程中又出现新的中断怎么办 ? (多重中断，可屏蔽，设置屏蔽字)
+				\end{enumerate}
+			\subsection[]{程序中断方式的I/O中断处理过程}
+				% \begin{markdown}
+				\begin{enumerate}
+					\item CPU相应中断的时间和条件\\
+					CPU响应I/O设备提出中断请求的条件是必须满足CPU中的允许中断触发器 (互斥锁) 为\textsf{1}。该触发器可用开中断指令置位，也可以用关中断指令或者硬件使其自动复位。由于I/O准备就绪的时间 (D = 1) 是随机的，而CPU是在统一的时刻 (EX段结束前) 向接口发中断查询信号，以获取I/O的中断请求。故CPU响应中断的时间一定是在\texttt{\textit{执行阶段的结束时刻}}
+					\item I/O中断处理流程 (以输入设备为例)\\
+					唐书P198，电子书P211
+					\item 中断服务程序的流程
+					\begin{enumerate}
+						\item 保护现场
+						\item 中断服务
+						\item 恢复现场
+						\item 中断返回
+					\end{enumerate}
+				\end{enumerate}
+				% \end{markdown}
+		\section{DMA方式}
+			\textit{特别 适用于高速I/O}\par
+			在DMA方式中，数据传送前后的准备和处理工作，由CPU上的管理程 序负责，DMA控制器仅负责数据传送工作\par
+			\subsection{DMA与主存交换数据时采用如下三种方法：}\par
+			\begin{enumerate}
+				\item 停止CPU访问主存 (在外设要求传送的时候CPU就放弃，然后一直stall)
+				\item 周期挪用/周期窃取 (读书人的事)；当DMA要求访问主存时，分为如下三种情况\par
+				\begin{enumerate}
+					\item available (CPU不在也不打算访存)：直接访问内存
+					\item busy (CPU正在访存)：等着
+					\item 访存冲突：CPU在执行访存指令的过程中插入了DMA请求，并挪用了一、二个存取周期，使CPU延缓了一、二个存取周期再访问主存
+				\end{enumerate}
+				\item DMA与CPU交替访问 (Round-Robin)
+			\end{enumerate}
+			访存冲突的原因其实是对同一个目标的写冲突
+	\chapter[]{中断系统\footnote{唐书第八章第四节、COD Ch4.9}}
+		\section{理论部分 (唐书)}
+			\subsection{概述}
+				\begin{enumerate}
+					\item 引起中断的各种因素\par
+					\begin{enumerate}
+						\item 人为设置的中断\\
+						一般称为自愿中断，执行策略如图所示：\par
+						\centerline{\includegraphics[height=3cm,width=5cm]{../pictures/Volunteer_Interrupt.png}}
+						\centerline{自愿中断}\par
+						\item 程序性事故，可能发生的异常如图所示 (常见的)\par
+						\centerline{\includegraphics[scale = 0.2]{../pictures/Exceptions.png}}
+						\centerline{异常}\par
+						\item 硬件故障
+						\item I/O设备请求中断
+						\item 外部事件 (用户通过键盘来发出中断，如ctrl+C/D/Z)
+					\end{enumerate}
+					\item 中断系统需要解决的问题
+					\begin{enumerate}
+						\item 各中断源如何向CPU提出中断请求
+						\item 当多个中断源同时提出请求时，中断系统对其作出响应仲裁
+						\item CPU在什么条件、什么时候、以什么方式来响应中断
+						\item CPU在响应中断之后如何保护现场
+						\item CPU响应中断后，如何停止原程序的执行而转入中断服务程序的入口地址
+						\item 中断处理结束后，CPU如何恢复现场并返回到原程序的间断处
+						\item 若在中断处理过程中又出现了新的中断请求，CPU应该如何处理
+					\end{enumerate}
+				\end{enumerate}
+			\subsection{中断请求标记和中断判优逻辑}
+\end{document}

@@ -1,0 +1,65 @@
+\documentclass[]{report}
+\usepackage[hmargin=1.25in,vmargin=1in]{geometry} %调整页边距
+% \usepackage[inner=1in,outer=1.25in]{geometry} %书籍左右不等宽排版
+\usepackage[utf8]{inputenc}
+% \usepackage[]{ctex} %据说可以直接调用诸如 \kaishu \fangsong \heiti 的命令修改字体
+\usepackage[]{xeCJK}
+\setCJKmainfont[BoldFont = STHeiti, ItalicFont = STKaiti]{Songti SC Light} %中文主字体
+\setCJKsansfont[BoldFont = Weibei SC, ItalicFont = Libian SC]{Xingkai SC} %中文无衬线字体
+\setCJKmonofont[ItalicFont = STFangsong]{Yuanti SC} %中文等宽字体
+\setmainfont{Times New Roman} %\rmfamily
+\setsansfont{Comic Sans MS} %\sffamily
+\setmonofont{Courier} %\ttfamily
+
+\usepackage{markdown} %使用markdown语法，在编译时需要打开 shell-escape 标记，即 $ xelatex --shell-escape example.tex
+\markdownSetup{hashEnumerators = true} %允许使用 #. 的方式编写有序列表
+\markdownSetup{inlineFootnotes = true} %允许使用脚注形式的超链接，调用语法为 [anchor](uri), ^[footnote], <uri>
+\markdownSetup{fencedCode = true} %以反引号和锁进来插入代码段，相当于 verbatim
+\markdownSetup{
+  pipeTables = true
+} %支持表格的用法 (图片已经在markdown包里面支持了)
+\usepackage{booktabs} %解决三线表的线条粗细问题
+
+\usepackage{graphicx} %插入图片
+\usepackage{makeidx}
+
+\usepackage{tikz} %带圈字符
+\usepackage{etoolbox} %带圈字符 (提供robustify)
+\usepackage{enumitem}
+\newcommand*{\circled}[1]{\lower.7ex\hbox{\tikz\draw (0pt, 0pt)%
+    circle (.5em) node {\makebox[1em][c]{\small #1}};}} %新定义命令：带圈字符
+\robustify{\circled}
+% \usepackage{enumerate} %有序列表
+
+\usepackage{hyperref} %超链接
+\markdownSetup{
+  inlineFootnotes = true,
+  renderers = {
+    link = {\href{#3}{#1}},
+  }
+} % markdown块中使用直接点进去的超链接
+% \setlist[enumerate,1]{label=(\arabic*).,font=\textup,leftmargin=7mm,labelsep=1.5mm,topsep=0mm,itemsep=-0.8mm}
+% \setlist[enumerate,2]{label=(\alph*).,font=\textup,leftmargin=7mm,labelsep=1.5mm,topsep=-0.8mm,itemsep=-0.8mm}
+
+\title{Summary for COD lab 6}
+\author{Tobiichi Origami}
+\date{\today}
+
+\linespread{1.3} %行间距为1.3倍默认间距 (1.2倍字符宽度)
+
+\makeindex
+
+\begin{document}
+\begin{markdown}
+	#. CPU相应中断的时间和条件
+	CPU响应I/O设备提出中断请求的条件是必须满足CPU中的允许中断触发器 (互斥锁) 为**1**。该触发器可用开中断指令置位，也可以用关中断指令或者硬件使其自动复位。由于I/O准备就绪的时间 (D = 1) 是随机的，而CPU是在统一的时刻 (EX段结束前) 向接口发中断查询信号，以获取I/O的中断请求。故CPU响应中断的时间一定是在*执行阶段的结束时刻*
+	#. I/O中断处理流程 (*以输入设备为例*)
+	唐书P198，电子书P211
+	#. 中断服务程序的流程
+	1. 保护现场
+	2. 中断服务
+	3. 恢复现场
+	4. 中断返回
+\end{markdown}
+
+\end{document}
